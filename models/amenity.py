@@ -1,20 +1,21 @@
-#!/usr/bin/python3
-"""create a unique FileStorage instance for your application"""
-from models.engine.file_storage import FileStorage
-from models.engine.db_storage import DBStorage
-from models.base_model import BaseModel
-from models.user import User
-from models.state import State
-from models.city import City
-from models.amenity import Amenity
-from models.place import Place
-from models.review import Review
+#!/usr/bin/python
+""" holds class Amenity"""
+import models
+from models.base_model import BaseModel, Base
 from os import getenv
+import sqlalchemy
+from sqlalchemy import Column, String
+from sqlalchemy.orm import relationship
 
 
-if getenv("HBNB_TYPE_STORAGE") == "db":
-    storage = DBStorage()
-else:
-    storage = FileStorage()
-storage.reload()
+class Amenity(BaseModel, Base):
+    """Representation of Amenity """
+    if models.storage_t == 'db':
+        __tablename__ = 'amenities'
+        name = Column(String(128), nullable=False)
+    else:
+        name = ""
 
+    def __init__(self, *args, **kwargs):
+        """initializes Amenity"""
+        super().__init__(*args, **kwargs)
